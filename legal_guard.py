@@ -99,7 +99,7 @@ async def execute_tool(
             "https://maas-api.lanyun.net/v1/chat/completions",
             headers={"Authorization": f"Bearer {LANYUN_API_KEY}"},
             json={
-                "model": "qwen3-235b-a22b",  # 使用Qwen3模型
+                "model": "/maas/qwen/Qwen3-235B-A22B",  # 使用Qwen3模型
                 "messages": [
                     {
                         "role": "system",
