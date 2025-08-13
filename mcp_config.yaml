@@ -1,0 +1,75 @@
+# LegalGuard MCP 服务配置 - Qwen3 版本
+version: 1.1
+service:
+  name: LegalGuard-Qwen
+  description: 基于Qwen3-235B-A22B模型的法律文件智能审查助手
+  endpoint: http://localhost:8080
+  protocol: HTTP
+  tools:
+    - name: legal_review
+      description: 法律文件自动审查工具
+      parameters:
+        - name: contract_file
+          type: file
+          description: PDF格式的法律合同文件
+          required: true
+        - name: critical_clauses
+          type: array
+          description: 自定义关键条款列表（可选）
+          items:
+            type: string
+          default: ["不可抗力", "争议解决", "保密条款", "违约责任"]
+        - name: jurisdiction
+          type: string
+          description: 管辖区域（如：中国大陆、欧盟、美国加州）
+          default: "中国大陆"
+      output:
+        type: object
+        properties:
+          missing_clauses:
+            type: array
+            description: 缺失的关键条款列表
+            items:
+              type: object
+              properties:
+                clause: 
+                  type: string
+                risk_level: 
+                  type: string
+                  enum: [高, 中, 低]
+                suggestion: 
+                  type: string
+          high_risk_terms:
+            type: array
+            description: 高风险条款列表
+            items:
+              type: string
+          overall_risk:
+            type: string
+            description: 整体风险评级
+            enum: [低, 中, 高]
+          analysis_time:
+            type: number
+            description: 分析耗时（秒）
+          model_used:
+            type: string
+            description: 使用的AI模型
+            default: "Qwen3-235B-A22B"
+      examples:
+        input:
+          contract_file: "sample_contract.pdf"
+          critical_clauses: ["不可抗力", "知识产权"]
+          jurisdiction: "中国大陆"
+        output:
+          missing_clauses:
+            - clause: "知识产权"
+              risk_level: "高"
+              suggestion: "建议添加知识产权归属和保密条款，依据《中华人民共和国著作权法》第10条..."
+          high_risk_terms:
+            - "第8条：违约金比例超过法定上限30%（违反《民法典》第585条）"
+            - "第12条：单方修改权条款未设置合理通知期限"
+          overall_risk: "高"
+          analysis_time: 3.8
+          model_used: "Qwen3-235B-A22B"
+  health_check: /health
+  documentation: https://github.com/sofus-deng/legal-guard
