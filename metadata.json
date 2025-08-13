@@ -1,0 +1,54 @@
+{
+  "mcp_service": {
+    "name": "LegalGuard-Qwen",
+    "version": "1.1",
+    "description": "基于Qwen3-235B-A22B模型的法律文件智能审查助手",
+    "provider": "Legal Guard Team",
+    "contact": "ai@intelligencexin.com",
+    "license": "Apache-2.0",
+    "endpoints": {
+      "service_base": "http://localhost:8080",
+      "tools_list": "/tools",
+      "execute_tool": "/execute",
+      "health_check": "/health"
+    },
+    "integrations": {
+      "lanyun_maas": {
+        "model": "qwen3-235b-a22b",
+        "api_version": "v1",
+        "token_usage": "~3000 tokens/request (平均)"
+      }
+    },
+    "performance": {
+      "avg_response_time": "3.5s",
+      "max_file_size": "15MB",
+      "concurrent_requests": 8
+    },
+    "features": {
+      "jurisdiction_support": [
+        "中国大陆",
+        "欧盟",
+        "美国",
+        "香港",
+        "新加坡"
+      ],
+      "legal_systems": [
+        "大陆法系",
+        "普通法系",
+        "混合法系"
+      ],
+      "specialized": [
+        "合同法",
+        "劳动法",
+        "知识产权",
+        "GDPR合规"
+      ]
+    },
+    "qwen3_advantages": {
+      "legal_reasoning": "增强的法律推理能力",
+      "multi_jurisdiction": "多司法管辖区支持",
+      "clause_accuracy": "条款识别准确率提升15%",
+      "citation": "自动引用法律条文能力"
+    }
+  }
+}
